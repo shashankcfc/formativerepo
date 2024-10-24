@@ -463,6 +463,27 @@ penguins_with_bmi$bmi</code></pre>
 ## [331] 0.09579914 0.08889691 0.08908747 0.09827950 0.09312812 0.09366033
 ## [337] 0.09308135 0.10218079 0.09598948 0.09335107 0.08332516 0.10134500
 ## [343] 0.09297052 0.09629119</code></pre>
+<pre class="r"><code># Defining another transformation function
+penguin_scaled &lt;- function(data) {
+  data$scaled_body_mass &lt;- scale(data$body_mass_g)
+  return(data)
+}
+
+# Apply the BMI function to the penguins dataset
+penguins_with_scaled_mass &lt;- penguin_scaled(penguins)
+
+# Display the first few rows with BMI values
+head(penguins_with_scaled_mass)</code></pre>
+<pre><code>## # A tibble: 6 × 9
+##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+## 1 Adelie  Torgersen           39.1          18.7               181        3750
+## 2 Adelie  Torgersen           39.5          17.4               186        3800
+## 3 Adelie  Torgersen           40.3          18                 195        3250
+## 4 Adelie  Torgersen           NA            NA                  NA          NA
+## 5 Adelie  Torgersen           36.7          19.3               193        3450
+## 6 Adelie  Torgersen           39.3          20.6               190        3650
+## # ℹ 3 more variables: sex &lt;fct&gt;, year &lt;int&gt;, scaled_body_mass &lt;dbl[,1]&gt;</code></pre>
 </div>
 
 
