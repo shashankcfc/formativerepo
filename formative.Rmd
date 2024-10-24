@@ -1,0 +1,34 @@
+---
+title: "Formative Assessment"
+output: html_document
+---
+
+## Introduction
+This chunk of code calculates the BMI for penguins using the `palmerpenguins` dataset.
+
+## Installing and Loading the Package
+
+```{r install-packages, message=FALSE}
+# Install and load the palmerpenguins package
+if (!requireNamespace("palmerpenguins", quietly = TRUE)) {
+  install.packages("palmerpenguins")
+}
+
+library(palmerpenguins)
+penguins
+
+# Define the function to calculate BMI for penguins
+penguin_bmi <- function(data) {
+  data$bmi <- (data$body_mass_g) / (data$flipper_length_mm^2)
+  return(data)
+}
+
+# Apply the BMI function to the penguins dataset
+penguins_with_bmi <- penguin_bmi(penguins)
+
+# Display the first few rows with BMI values
+head(penguins_with_bmi)
+
+# Display the BMI values for the penguins
+penguins_with_bmi$bmi
+```
