@@ -35,9 +35,9 @@ penguins_with_bmi$bmi
 
 ```{r}
 # Defining another transformation function
-penguin_scaled <- function(data) {
-  data$scaled_body_mass <- scale(data$body_mass_g)
-  return(data)
+penguin_scaled <- function(data_new) {
+  data_new$scaled_body_mass <- scale(data_new$body_mass_g)
+  return(data_new)
 }
 
 # Apply the BMI function to the penguins dataset
