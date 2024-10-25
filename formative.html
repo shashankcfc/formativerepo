@@ -464,9 +464,9 @@ penguins_with_bmi$bmi</code></pre>
 ## [337] 0.09308135 0.10218079 0.09598948 0.09335107 0.08332516 0.10134500
 ## [343] 0.09297052 0.09629119</code></pre>
 <pre class="r"><code># Defining another transformation function
-penguin_scaled &lt;- function(data) {
-  data$scaled_body_mass &lt;- scale(data$body_mass_g)
-  return(data)
+penguin_scaled &lt;- function(data_new) {
+  data_new$scaled_body_mass &lt;- scale(data_new$body_mass_g)
+  return(data_new)
 }
 
 # Apply the BMI function to the penguins dataset
