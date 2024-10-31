@@ -7,7 +7,6 @@ output: html_document
 # Set CRAN mirror for package installations
 options(repos = c(CRAN = "https://cran.rstudio.com/"))
 ```
-
 ### Question 1 
 
 ## Introduction 
@@ -47,104 +46,5 @@ penguins_with_scaled_mass <- penguin_scaled(penguins)
 
 # Display the first few rows with BMI values
 head(penguins_with_scaled_mass)
- 
-```
-### Question 2
-
-## Introduction
-This code uses the cars dataset to check whether or not it is tidy and subsequently, converts it into wide format. 
-
-```{r}
-# loading the cars dataset
-data("mtcars")
-head(mtcars)
-View(mtcars)
-
-# The mtcars dataset contains data about various car models from the 1974 Motor Trend magazine. This dataset provides data about different attributes of cars, such as miles per gallon (mpg), number of cylinders, horsepower, etc. The dataset can be considered tidy because: (i) each of the variables have their own columns and (ii) each observations (cars) have their own rows. 
-
-# Making the mtcars dataset wide
-library(tidyr)
-mtcars_wide <- pivot_wider(mtcars, 
-                           names_from = am, 
-                           values_from = c(mpg, hp, wt),
-                           names_prefix = "am_")
-head(mtcars_wide)
-View(mtcars_wide)
-
-# The transformed data is now wide as we have multiple columns for the same variables. 
- 
-```
-### Question 3
-
-## Introduction
-This code uses the gapminder dataset which looks at some key socio-economic indicators for all countries across different years.
-```{r, echo=TRUE}
-# loading the gapminder dataset
-library(dplyr)
-install.packages("gapminder")
-library(gapminder)
-
-data("gapminder")
-head(gapminder)
-View(gapminder)
-
-# Summarising and transforming the key data points by continent
-gapminder_tranformed <- gapminder %>% group_by(continent) %>% summarise(mean_lifex = mean(lifeExp),
-                                                median_gdp = median(gdpPercap),
-mean_pop = mean(pop)
-) %>% mutate(total_population = sum(gapminder$pop, na.rm = TRUE),
-    gdp_percentage_of_max = (median_gdp / max(median_gdp)) * 100
-  )
-gapminder_tranformed
-
-
- 
-```
-### Question 4
-
-```{r}
-# loading the polls dataset
-library(tidyverse)
-polls <- read_csv("president_polls.csv")
-head(polls)
-View(polls)
-library(dplyr)
-library(ggplot2)
-
-# changing the date format and filtering the data
-polls <- polls %>%
-  mutate(end_date = as.Date(end_date, format = "%m/%d/%y"))
-
-filtered_polls <- polls %>%
-  filter(answer %in% c("Trump", "Harris") & 
-           end_date >= as.Date("2024-08-01") & 
-           end_date <= as.Date("2024-10-17"))
-
-#calculating polling percentages for each candidate for each day
-
-polling_percentage <- filtered_polls %>%
-  group_by(end_date, answer) %>%
-  summarise(count = n(), .groups = 'drop') %>%
-  group_by(end_date) %>%
-  mutate(polling_percentage = (count / sum(count)) * 100) %>%
-  filter(answer == "Harris" | answer == "Trump")
-polling_percentage
-
-# Step 4: Create the plot with polling percentages
-ggplot(polling_percentage, aes(x = end_date, y = polling_percentage, color = answer)) +
-  geom_jitter(width = 0.4, height = 0.2, alpha = 0.6) +  # Increase jitter width and add height
-  geom_smooth(method = "loess", se = FALSE, size = 1.2) +  # Smoothed line for averages
-  scale_color_manual(values = c("Harris" = "blue", "Trump" = "red")) +  # Color-blind-safe colors
-  labs(title = "Polling Percentages for Donald Trump and Kamala Harris (Aug 1 - Oct 17, 2024)",
-       x = "End Date",
-       y = "Polling Percentage (%)",
-       color = "Candidate") +
-  scale_y_continuous(limits = c(45, 55)) +  # Adjust y-axis limits for better focus
-  theme_minimal(base_size = 15) +  # Minimal theme for clarity
-  theme(axis.title.x = element_text(size = 14),
-        axis.title.y = element_text(size = 14),
-        legend.title = element_text(size = 14),
-        legend.text = element_text(size = 12))
-
  
 ```
